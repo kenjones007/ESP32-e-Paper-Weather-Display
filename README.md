@@ -1,25 +1,29 @@
 # ESP32-e-Paper-Weather-Display
 An ESP32 and an ePaper Display reads [Open Weather Map](https://openweathermap.org/) and displays the weather
 
-For standalone use, download the ZIP file to your desktop.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ORIGINAL DONE BY G6EJD !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-Go to Sketch > Include Library... > Add .ZIP Library... Then, choose the ZIP file.
+So please visit his page for the original software: https://github.com/G6EJD/ESP32-e-Paper-Weather-Display
 
-After inclusion, Go to File, Examples and scroll down to 'ESP32-e-paperWeather-display' and choose your version/screen size. Make sure to come back to this dialog from time to time to keep each library up to date. Also make sure that you only have one version of each of the libraries installed.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ORIGINAL DONE BY G6EJD !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-Also see: https://www.arduino.cc/en/Guide/Libraries#toc4
-
-- [Arduino JSON](https://github.com/bblanchon/ArduinoJson) (v6 or above) by Benoît Blanchon
+I just enhanced his version, like:
+- Better alignment of Text and Graphics
+- Better alignment of Forecast Multiline-Text
+- Wind and Gust speeds
+- Multi-Graphs to show more than one value (ex. Rain and Snow)
+- Ajust-Graphs with moving x-axis descriptions for better readout of forecasts
+- Added Moon-Set and Rise times, Distance, Zodiac, Age, Longitude and Latitude and Illumination
+- Changed Battery-Display when no battery used
+- Moved some Status-Infos to better suitable places
 
 Download the software to your Arduino's library directory.
 
 1. From the examples, choose depending on your module either
-   - Waveshare_1_54
-   - Waveshare_2_13
-   - Waveshare_2_7
-   - Waveshare_2_9
-   - Waveshare_4_2
-   - Waveshare_7_5
    - Waveshare_7_5_T7 (newer 800x480 version of the older 640x384)
    
    Code requires [GxEPD2 library](https://github.com/ZinggJM/GxEPD2)
@@ -43,6 +47,10 @@ NOTE: See schematic for the wiring diagram, all displays are wired the same, so 
 The Battery monitor assumes the use of a Lolin D32 board which uses GPIO-35 as an ADC input, also it has an on-board 100K+100K voltage divider directly connected to the Battery terminals. On other boards, you will need to change the analogRead(35) statement to your board e.g. (39) and attach a voltage divider to the battery terminals. The TTGO T5 and T5S boards already contain the resistor divider on the correct pin.
 
 Compile and upload the code - Enjoy!
+
+7.5" V2 Marani 800x480 E-Paper Layout
+
+![alt text width="600"](/Waveshare_7_5_V2_marani.jpg)
 
 7.5" 800x480 E-Paper Layout
 
