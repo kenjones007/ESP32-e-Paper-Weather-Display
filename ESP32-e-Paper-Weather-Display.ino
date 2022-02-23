@@ -16,6 +16,17 @@
   IN NO EVENT SHALL THE AUTHOR OR COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   See more at http://www.dsbird.org.uk
+
+  Modifications done by Alessandro Marani
+  - Better alignment of Text and Graphics
+  - Better alignment of Forecast Multiline-Text
+  - Wind and Gust speeds
+  - Multi-Graphs to show more than one value (ex. Rain and Snow)
+  - Ajust-Graphs with moving x-axis descriptions for better readout of forecasts
+  - Added Moon-Set and Rise times, Distance, Zodiac, Age, Longitude and Latitude and Illumination
+  - Changed Battery-Display when no battery used
+  - Moved some Status-Infos to better suitable places
+  - Stronger lines in Weather Symbols and Wind graphics
 */
 
 #define BOX_HEADER 20
