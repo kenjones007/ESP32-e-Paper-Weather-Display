@@ -1,15 +1,19 @@
 # ESP32-e-Paper-Weather-Display
 An ESP32 and an ePaper Display reads [Open Weather Map](https://openweathermap.org/) and displays the weather
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ORIGINAL DONE BY G6EJD !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+----
+ORIGINAL DONE BY G6EJD
+
+----
 
 So please visit his page for the original software: https://github.com/G6EJD/ESP32-e-Paper-Weather-Display
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ORIGINAL DONE BY G6EJD !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+----
+ORIGINAL DONE BY G6EJD
+
+----
+
+Take a look at the V2 Marani Version. If you like it, download it, if not, take the original one from G6EJD
 
 I just enhanced his version, like:
 - Better alignment of Text and Graphics
@@ -20,6 +24,35 @@ I just enhanced his version, like:
 - Added Moon-Set and Rise times, Distance, Zodiac, Age, Longitude and Latitude and Illumination
 - Changed Battery-Display when no battery used
 - Moved some Status-Infos to better suitable places
+
+
+
+----
+ORIGINAL DONE BY G6EJD
+
+----
+
+
+
+----
+ORIGINAL DONE BY G6EJD
+
+----
+
+
+
+----
+ORIGINAL DONE BY G6EJD
+
+----
+
+
+
+----
+ORIGINAL DONE BY G6EJD
+
+----
+
 
 Download the software to your Arduino's library directory.
 
@@ -60,21 +93,6 @@ Compile and upload the code - Enjoy!
 
 ![alt text width="600"](/Waveshare_7_5.jpg)
 
-4.2" 400x300 E-Paper Layout
-
-![alt_text, width="400"](/Waveshare_4_2.jpg)
-
-2.7" 264x176 E-Paper Layout
-
-![alt_text, width="400"](/Waveshare_2_7.jpg)
-
-2.13" 250x122 E-Paper Layout
-
-![alt_text, width="200"](/Waveshare_2_13.jpg)
-
-1.54" 200x200 E-Paper Layout
-
-![alt_text, width="200"](/Waveshare_1_54.jpg)
 
 **** NOTE change needed for latest Waveshare HAT versions ****
 
