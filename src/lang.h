@@ -5,14 +5,14 @@ const String TXT_FORECAST_VALUES  = "3-Day Forecast Values";
 const String TXT_CONDITIONS       = "Conditions";
 const String TXT_DAYS             = "(Days)";
 const String TXT_TEMPERATURES     = "Temperature";
-const String TXT_TEMPERATURE_C    = "Temperature (*C)";
-const String TXT_TEMPERATURE_F    = "Temperature (*F)";
-const String TXT_HUMIDITY_PERCENT = "Humidity (%)";
+const String TXT_TEMPERATURE_C    = "Temperature (*C)/Day";
+const String TXT_TEMPERATURE_F    = "Temperature (*F)/Day";
+const String TXT_HUMIDITY_PERCENT = "Humidity (%)/Day";
 
 // Pressure
 const String TXT_PRESSURE         = "Pressure";
-const String TXT_PRESSURE_HPA     = "Pressure (hPa)";
-const String TXT_PRESSURE_IN      = "Pressure (in)";
+const String TXT_PRESSURE_HPA     = "Pressure (hPa)/Day";
+const String TXT_PRESSURE_IN      = "Pressure (in)/Day";
 const String TXT_PRESSURE_STEADY  = "Steady";
 const String TXT_PRESSURE_RISING  = "Rising";
 const String TXT_PRESSURE_FALLING = "Falling";
@@ -22,7 +22,9 @@ const String TXT_RAINFALL_MM = "Rainfall (mm)";
 const String TXT_RAINFALL_IN = "Rainfall (in)";
 const String TXT_SNOWFALL_MM = "Snowfall (mm)";
 const String TXT_SNOWFALL_IN = "Snowfall (in)";
-const String TXT_PRECIPITATION_SOON = "Prec.";
+const String TXT_RAINSNOWFALL_IN = "Rain+Snowfall (in)/Day";
+const String TXT_RAINSNOWFALL_MM = "Rain+Snowfall (mm)/Day";
+const String TXT_PRECIPITATION_SOON = "Precipitation";
 
 
 //Sun
@@ -30,14 +32,14 @@ const String TXT_SUNRISE  = "Sunrise";
 const String TXT_SUNSET   = "Sunset";
 
 //Moon
-const String TXT_MOON_NEW             = "New";
-const String TXT_MOON_WAXING_CRESCENT = "Waxing Crescent";
+const String TXT_MOON_NEW             = "New Moon";
+const String TXT_MOON_WAXING_CRESCENT = "Evening Crescent";
 const String TXT_MOON_FIRST_QUARTER   = "First Quarter";
 const String TXT_MOON_WAXING_GIBBOUS  = "Waxing Gibbous";
-const String TXT_MOON_FULL            = "Full";
+const String TXT_MOON_FULL            = "Full Moon";
 const String TXT_MOON_WANING_GIBBOUS  = "Waning Gibbous";
 const String TXT_MOON_THIRD_QUARTER   = "Third Quarter";
-const String TXT_MOON_WANING_CRESCENT = "Waning Crescent";
+const String TXT_MOON_WANING_CRESCENT = "Morning Crescent";
 
 //Power / WiFi
 const String TXT_POWER  = "Power";
@@ -63,6 +65,8 @@ const String TXT_W   = "W";
 const String TXT_WNW = "WNW";
 const String TXT_NW  = "NW";
 const String TXT_NNW = "NNW";
+const String TXT_WINDGUST_M = "Wind+Gust (km/h)/Day";
+const String TXT_WINDGUST_I = "Wind+Gust (mph/h)/Day";
 
 //Day of the week
 const char* weekday_D[] = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };

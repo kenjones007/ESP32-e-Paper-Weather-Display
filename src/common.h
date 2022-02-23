@@ -46,7 +46,9 @@ bool DecodeWeather(WiFiClient& json, String Type) {
     WxConditions[0].Humidity    = root["main"]["humidity"].as<float>();                Serial.println("Humi: "+String(WxConditions[0].Humidity));
     WxConditions[0].Low         = root["main"]["temp_min"].as<float>();                Serial.println("TLow: "+String(WxConditions[0].Low));
     WxConditions[0].High        = root["main"]["temp_max"].as<float>();                Serial.println("THig: "+String(WxConditions[0].High));
+    WxConditions[0].Feelslike   = root["main"]["feels_like"].as<float>();              Serial.println("TFel: "+String(WxConditions[0].Feelslike));
     WxConditions[0].Windspeed   = root["wind"]["speed"].as<float>();                   Serial.println("WSpd: "+String(WxConditions[0].Windspeed));
+    WxConditions[0].Gust        = root["wind"]["gust"].as<float>();                    Serial.println("WGst: "+String(WxConditions[0].Gust));
     WxConditions[0].Winddir     = root["wind"]["deg"].as<float>();                     Serial.println("WDir: "+String(WxConditions[0].Winddir));
     WxConditions[0].Cloudcover  = root["clouds"]["all"].as<int>();                     Serial.println("CCov: "+String(WxConditions[0].Cloudcover)); // in % of cloud cover
     WxConditions[0].Visibility  = root["visibility"].as<int>();                        Serial.println("Visi: "+String(WxConditions[0].Visibility)); // in metres
@@ -66,6 +68,7 @@ bool DecodeWeather(WiFiClient& json, String Type) {
       WxForecast[r].Temperature       = list[r]["main"]["temp"].as<float>();                    Serial.println("Temp: "+String(WxForecast[r].Temperature));
       WxForecast[r].Low               = list[r]["main"]["temp_min"].as<float>();                Serial.println("TLow: "+String(WxForecast[r].Low));
       WxForecast[r].High              = list[r]["main"]["temp_max"].as<float>();                Serial.println("THig: "+String(WxForecast[r].High));
+      WxForecast[r].Feelslike         = list[r]["main"]["feels_like"].as<float>();              Serial.println("TFel: "+String(WxForecast[r].Feelslike));
       WxForecast[r].Pressure          = list[r]["main"]["pressure"].as<float>();                Serial.println("Pres: "+String(WxForecast[r].Pressure));
       WxForecast[r].Humidity          = list[r]["main"]["humidity"].as<float>();                Serial.println("Humi: "+String(WxForecast[r].Humidity));
       WxForecast[r].Forecast0         = list[r]["weather"][0]["main"].as<const char*>();        Serial.println("For0: "+String(WxForecast[r].Forecast0));
@@ -75,6 +78,7 @@ bool DecodeWeather(WiFiClient& json, String Type) {
       WxForecast[r].Description       = list[r]["weather"][0]["description"].as<const char*>(); Serial.println("Desc: "+String(WxForecast[r].Description));
       WxForecast[r].Cloudcover        = list[r]["clouds"]["all"].as<int>();                     Serial.println("CCov: "+String(WxForecast[r].Cloudcover)); // in % of cloud cover
       WxForecast[r].Windspeed         = list[r]["wind"]["speed"].as<float>();                   Serial.println("WSpd: "+String(WxForecast[r].Windspeed));
+      WxForecast[r].Gust              = list[r]["wind"]["gust"].as<float>();                    Serial.println("WGst: "+String(WxForecast[r].Gust));
       WxForecast[r].Winddir           = list[r]["wind"]["deg"].as<float>();                     Serial.println("WDir: "+String(WxForecast[r].Winddir));
       WxForecast[r].Rainfall          = list[r]["rain"]["3h"].as<float>();                      Serial.println("Rain: "+String(WxForecast[r].Rainfall));
       WxForecast[r].Snowfall          = list[r]["snow"]["3h"].as<float>();                      Serial.println("Snow: "+String(WxForecast[r].Snowfall));
