@@ -24,6 +24,7 @@ I just enhanced his version, like:
 - Added Moon-Set and Rise times, Distance, Zodiac, Age, Longitude and Latitude and Illumination
 - Changed Battery-Display when no battery used
 - Moved some Status-Infos to better suitable places
+- Stronger lines in Weather Symbols and Wind graphics
 
 
 
