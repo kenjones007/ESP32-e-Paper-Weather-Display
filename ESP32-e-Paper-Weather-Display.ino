@@ -17,7 +17,7 @@
   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   See more at http://www.dsbird.org.uk
 
-  Modifications done by Alessandro Marani
+   Modifications done by Alessandro Marani
   - Better alignment of Text and Graphics
   - Better alignment of Forecast Multiline-Text
   - Wind and Gust speeds
@@ -27,6 +27,7 @@
   - Changed Battery-Display when no battery used
   - Moved some Status-Infos to better suitable places
   - Stronger lines in Weather Symbols and Wind graphics
+  - Fixed Moon drawing routine to avoid drawing strayed pixels
 */
 
 #define BOX_HEADER 20
@@ -388,6 +389,7 @@ double DrawMoon(int x, int y, int dd, int mm, int yy, String hemisphere) {
     double Phase = NormalizedMoonPhase(dd, mm, yy);
     hemisphere.toLowerCase();
     if (hemisphere == "south") Phase = 1 - Phase;
+
     // Draw dark part of moon
     display.fillCircle(x + diameter - 1, y + diameter, diameter / 2 + 1, GxEPD_BLACK);
     const int number_of_lines = 90;
@@ -405,16 +407,26 @@ double DrawMoon(int x, int y, int dd, int mm, int yy, String hemisphere) {
             Xpos2 = Xpos - 2 * Phase * Rpos + Rpos;
         }
         // Draw light part of moon
+        // Marani: Fixed the calculation to draw the moon phases smoothly without straying pixels
         double pW1x = (Xpos1 + number_of_lines) / number_of_lines * diameter + x;
-        double pW1y = (number_of_lines - Ypos) / number_of_lines * diameter + y;
+        double pW1y = ceil((number_of_lines - Ypos) / number_of_lines * diameter + y);
         double pW2x = (Xpos2 + number_of_lines) / number_of_lines * diameter + x;
-        double pW2y = (number_of_lines - Ypos) / number_of_lines * diameter + y;
-        double pW3x = (Xpos1 + number_of_lines) / number_of_lines * diameter + x;
-        double pW3y = (Ypos + number_of_lines) / number_of_lines * diameter + y;
-        double pW4x = (Xpos2 + number_of_lines) / number_of_lines * diameter + x;
-        double pW4y = (Ypos + number_of_lines) / number_of_lines * diameter + y;
-        display.drawLine(pW1x, pW1y, pW2x, pW2y, GxEPD_WHITE);
-        display.drawLine(pW3x, pW3y, pW4x, pW4y, GxEPD_WHITE);
+        double pW2y = floor((Ypos + number_of_lines) / number_of_lines * diameter + y);
+        bool draw_fill = false;
+        if (Phase < 0.48) {
+            pW1x = ceil(pW1x);
+            pW2x = floor(pW2x-1);
+            draw_fill = true;
+        }
+        else if (Phase > 0.52 && Phase <= 1.0) {
+            pW1x = floor(pW1x-1);
+            pW2x = ceil(pW2x);
+            draw_fill = true;
+        }
+        if (draw_fill) {
+            display.drawLine(pW1x, pW1y, pW2x, pW1y, GxEPD_WHITE);
+            display.drawLine(pW1x, pW2y, pW2x, pW2y, GxEPD_WHITE);
+        }
     }
     display.drawCircle(x + diameter - 1, y + diameter, diameter / 2, GxEPD_BLACK);
     return Phase;
