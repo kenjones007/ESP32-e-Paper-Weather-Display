@@ -30,6 +30,7 @@
   - Fixed Moon drawing routine to avoid drawing strayed pixels
 */
 
+#include <u8g2_fonts.h>
 #define BOX_HEADER 20
 
 #include "owm_credentials.h"          // See 'owm_credentials' tab and enter your OWM API key and set the Wifi SSID and PASSWORD
@@ -210,7 +211,6 @@ void drawBox(int x, int y, int w, int h, int cx, String text) {
 //#########################################################################################
 void DisplayDisplayWindSection(int x, int y, int w, int h, float angle, float windspeed, float gust, int Cradius) {
     int cx = x + (w / 2);
-//    int cy = y + BOX_HEADER + ((h - BOX_HEADER) / 2);
     int cy = y + BOX_HEADER + Cradius + 20;
 
     drawBox(x, y, w, h, cx, TXT_WIND_SPEED_DIRECTION);
@@ -237,6 +237,7 @@ void DisplayDisplayWindSection(int x, int y, int w, int h, float angle, float wi
         dyi = dyo * 0.9;
         display.drawLine(dxo + cx, dyo + cy, dxi + cx, dyi + cy, GxEPD_BLACK);
     }
+
     drawString(cx, cy - Cradius - 15, TXT_N, CENTER);
     drawString(cx, cy + Cradius + 3, TXT_S, CENTER);
     drawString(cx - Cradius - 12, cy - 3, TXT_W, CENTER);
@@ -248,7 +249,7 @@ void DisplayDisplayWindSection(int x, int y, int w, int h, float angle, float wi
     drawValue(cx, cy + 5, "("+String(gust, 1)+")", Units == "M" ? "km/h" : "mph", u8g2_font_helvB12_tf, u8g2_font_helvB08_tf, CENTER);
 
     // draw wind forecast
-    for (uint8_t r = 1; r <= max_readings; r++) {
+    for (uint8_t r = 0; r < max_readings; r++) {
         if (Units == "M") wind_readings[r] = WxForecast[r].Windspeed * 3.6; else wind_readings[r] = WxForecast[r].Windspeed;
         if (Units == "M") gust_readings[r] = WxForecast[r].Gust * 3.6; else gust_readings[r] = WxForecast[r].Gust;
     }
@@ -258,7 +259,6 @@ void DisplayDisplayWindSection(int x, int y, int w, int h, float angle, float wi
     calcMinMaxFromArray(max_readings, gust_readings, y2min, y2max);
     DrawGraph(34, y+h-70, 164, 55, _min(y1min, y2min), _max(y1max, y2max), Units == "M" ? TXT_WINDGUST_M : TXT_WINDGUST_I, wind_readings, max_readings, autoscale_off, barchart_off, drawgraph_on);
     DrawGraph(34, y+h-70, 164, 55, _min(y1min, y2min), _max(y1max, y2max), Units == "M" ? TXT_WINDGUST_M : TXT_WINDGUST_I, gust_readings, max_readings, autoscale_off, barchart_off, drawgraph_off);
-
 }
 //#########################################################################################
 String WindDegToDirection(float winddirection) {
@@ -363,7 +363,7 @@ void DisplayAstronomySection(int x, int y) {
     DrawMoon(x + 320, y - 2, day_utc, month_utc, year_utc, Hemisphere);
 
     time_t utcOffset = mktime(now_utc) - _now;
-    m.calculate(_now + utcOffset);
+    m.calculate(_now + utcOffset + WxConditions[0].Timezone);
     mr.calculate(WxConditions[0].lat, WxConditions[0].lon, _now + utcOffset);
     time_t moonRiseTime = mr.riseTime - utcOffset;
     time_t moonSetTime = mr.setTime - utcOffset;
@@ -484,22 +484,18 @@ String MoonAge(int d, int m, int y, String hemisphere) {
 //#########################################################################################
 void DisplayForecastSection(int x, int y) {
     u8g2Fonts.setFont(u8g2_font_helvB08_tf);
-    int f = 0;
-    do {
+    for (uint8_t f = 0; f <= 7; f++) {
         DisplayForecastWeather(x, y, f);
-        f++;
-    } while (f <= 7);
+    };
     // Pre-load temporary arrays with with data - because C parses by reference
-    int r = 1;
-    do {
+    for (uint8_t r = 0; r < max_readings; r++) {
         if (Units == "I") pressure_readings[r] = WxForecast[r].Pressure * 0.02953;   else pressure_readings[r] = WxForecast[r].Pressure;
         if (Units == "I") rain_readings[r] = WxForecast[r].Rainfall * 0.0393701; else rain_readings[r] = WxForecast[r].Rainfall;
         if (Units == "I") snow_readings[r] = WxForecast[r].Snowfall * 0.0393701; else snow_readings[r] = WxForecast[r].Snowfall;
         temperature_readings[r] = WxForecast[r].Temperature;
         temperature_feel_readings[r] = WxForecast[r].Feelslike;
         humidity_readings[r] = WxForecast[r].Humidity;
-        r++;
-    } while (r <= max_readings);
+    };
     int gwidth = 165, gheight = 122;
     int gx = (SCREEN_WIDTH - gwidth * 4) / 5 + 5;
     int gy = 345;
@@ -521,6 +517,7 @@ void DisplayForecastSection(int x, int y) {
 void DisplayConditionsSection(int x, int y, int w, int h, String IconName, bool IconSize) {
     int cx = x + (w / 2);
     int cy = y + BOX_HEADER + ((h - BOX_HEADER) / 2);
+
     if (IconSize == LargeIcon) {
         drawBox(x, y, w, h, cx, TXT_CONDITIONS);
         drawValue(cx, y + h - 25, String(WxConditions[0].Humidity, 0) + "%", "RH", u8g2_font_helvB14_tf, u8g2_font_helvB10_tf, CENTER);
@@ -971,21 +968,21 @@ void Nodata(int x, int y, bool IconSize, String IconName) {
     If called with Y!_Max value of 500 and the data never goes above 500, then autoscale will retain a 0-500 Y scale, if on, the scale increases/decreases to match the data.
     auto_scale_margin, e.g. if set to 1000 then autoscale increments the scale by 1000 steps.
     Marani: Added draw_graph: TRUE = Draw complete graph with values, FALSE = Just draw values (to add multiple values in one graph) thin
+    Marani: Fixed error in MinMax Calculations
+    Marani: Fixed error in DrawGraph values (Array 0-based index error)
 */
-void calcMinMaxFromArray(int readings, float DataArray[], float& Y1Min, float& Y1Max) {
-#define auto_scale_margin 0 // Sets the autoscale increment, so axis steps up in units of e.g. 3
+void calcMinMaxFromArray(uint8_t readings, float DataArray[], float& Y1Min, float& Y1Max) {
     float maxYscale = -10000;
     float minYscale = 10000;
-    for (int i = 1; i < readings; i++) {
-        if (DataArray[i] >= maxYscale) maxYscale = DataArray[i];
-        if (DataArray[i] <= minYscale) minYscale = DataArray[i];
+    for (uint8_t i = 0; i < readings; i++) {
+        if (DataArray[i] > maxYscale) maxYscale = DataArray[i];
+        if (DataArray[i] < minYscale) minYscale = DataArray[i];
     }
-    maxYscale = round(maxYscale + auto_scale_margin); // Auto scale the graph and round to the nearest value defined, default was Y1Max
-    Y1Max = round(maxYscale + 0.5);
-    if (minYscale != 0) minYscale = round(minYscale - auto_scale_margin); // Auto scale the graph and round to the nearest value defined, default was Y1Min
-    if (minYscale > 0.5) Y1Min = round(minYscale - 0.5); else Y1Min = round(minYscale);
+    Y1Max = ceil(maxYscale + 0.5);
+    if (minYscale > 0.5) Y1Min = floor(minYscale - 0.5); else Y1Min = floor(minYscale);
 }
-void DrawGraph(int x_pos, int y_pos, int gwidth, int gheight, float Y1Min, float Y1Max, String title, float DataArray[], int readings, boolean auto_scale, boolean barchart_mode, boolean draw_graph) {
+
+void DrawGraph(int x_pos, int y_pos, int gwidth, int gheight, float Y1Min, float Y1Max, String title, float DataArray[], uint8_t readings, boolean auto_scale, boolean barchart_mode, boolean draw_graph) {
 #define y_minor_axis 5      // 5 y-axis division markers
     int last_x, last_y;
     float x2, y2;
@@ -998,8 +995,8 @@ void DrawGraph(int x_pos, int y_pos, int gwidth, int gheight, float Y1Min, float
         drawString(x_pos + gwidth / 2, y_pos - 16, title, CENTER);
     }
     // Draw the data
-    for (int gx = 1; gx < readings; gx++) {
-        x2 = x_pos + gx * gwidth / (readings - 1) - 1; // max_readings is the global variable that sets the maximum data that can be plotted
+    for (uint8_t gx = 0; gx < readings; gx++) {
+        x2 = x_pos + (gx+1) * gwidth / (readings) - 1; // max_readings is the global variable that sets the maximum data that can be plotted
         y2 = y_pos + (Y1Max - constrain(DataArray[gx], Y1Min, Y1Max)) / (Y1Max - Y1Min) * gheight + 1;
         if (barchart_mode) {
             if (draw_graph) display.fillRect(x2, y2, (gwidth / readings) - 1, y_pos + gheight - y2 + 2, GxEPD_BLACK);
@@ -1030,7 +1027,7 @@ void DrawGraph(int x_pos, int y_pos, int gwidth, int gheight, float Y1Min, float
             for (int j = 0; j < number_of_dashes; j++) { // Draw dashed graph grid lines
                 if (spacing < y_minor_axis) display.drawFastHLine((x_pos + 3 + j * gwidth / number_of_dashes), y_pos + (gheight * spacing / y_minor_axis), gwidth / (2 * number_of_dashes), GxEPD_BLACK);
             }
-            if ((Y1Max - (float)(Y1Max - Y1Min) / y_minor_axis * spacing) < 5 || title == TXT_PRESSURE_IN) {
+            if ((((Y1Max - (float)(Y1Max - Y1Min) / y_minor_axis * spacing) < 5) && ((Y1Max - (float)(Y1Max - Y1Min) / y_minor_axis * spacing) > 0)) || title == TXT_PRESSURE_IN) {
                 drawString(x_pos - 1, y_pos + gheight * spacing / y_minor_axis - 5, String((Y1Max - (float)(Y1Max - Y1Min) / y_minor_axis * spacing + 0.01), 1), RIGHT);
             }
             else
