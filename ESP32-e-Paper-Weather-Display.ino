@@ -664,9 +664,9 @@ boolean UpdateLocalTime() {
 //#########################################################################################
 void DrawBattery(int x, int y) {
     uint8_t percentage = 100;
-    float voltage = analogRead(35) / 4096.0 * 7.46;
+    float voltage = analogRead(35) / 4096.0 * 6.96;
 
-    if (voltage > 1) { // Show voltage only display if there is a valid reading
+    if ((voltage > 3.0f) && (voltage < 4.9f)) { // Show voltage only display if there is a valid reading
         Serial.println("Voltage = " + String(voltage));
         percentage = constrain((voltage - 3.5f) * 100.0f / (4.2f - 3.5f), 0, 100);
         drawString(x - 5, y, String(percentage) + "%", RIGHT);

@@ -1,18 +1,6 @@
 # ESP32-e-Paper-Weather-Display
 An ESP32 and an ePaper Display reads [Open Weather Map](https://openweathermap.org/) and displays the weather
 
-----
-ORIGINAL DONE BY G6EJD
-
-----
-
-So please visit his page for the original software: https://github.com/G6EJD/ESP32-e-Paper-Weather-Display
-
-----
-ORIGINAL DONE BY G6EJD
-
-----
-
 Take a look at the V2 Marani Version. If you like it, download it, if not, take the original one from G6EJD
 
 I just enhanced his version, like:
@@ -25,35 +13,6 @@ I just enhanced his version, like:
 - Changed Battery-Display when no battery used
 - Moved some Status-Infos to better suitable places
 - Stronger lines in Weather Symbols and Wind graphics
-
-
-
-----
-ORIGINAL DONE BY G6EJD
-
-----
-
-
-
-----
-ORIGINAL DONE BY G6EJD
-
-----
-
-
-
-----
-ORIGINAL DONE BY G6EJD
-
-----
-
-
-
-----
-ORIGINAL DONE BY G6EJD
-
-----
-
 
 Download the software to your Arduino's library directory.
 
