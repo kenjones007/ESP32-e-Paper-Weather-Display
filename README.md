@@ -1,4 +1,5 @@
 # ESP32-e-Paper-Weather-Display
+![alt text width="600"](/pictures/amaWeatherStationComplete.jpg)
 An ESP32 and an ePaper Display reads [Open Weather Map](https://openweathermap.org/) and displays the weather
 
 Take a look at the V2 Marani Version. If you like it, download it, if not, take the original one from G6EJD
@@ -41,21 +42,21 @@ Compile and upload the code - Enjoy!
 
 7.5" V2 Marani 800x480 E-Paper Layout
 
-![alt text width="600"](/Waveshare_7_5_V2_marani.jpg)
+![alt text width="600"](/pictures/Waveshare_7_5_V2_marani.jpg)
 
 7.5" Old 800x480 E-Paper Layout
 
-![alt text width="600"](/Waveshare_7_5_new.jpg)
+![alt text width="600"](/pictures/Waveshare_7_5_new.jpg)
 
 7.5" Old 640x384 E-Paper Layout
 
-![alt text width="600"](/Waveshare_7_5.jpg)
+![alt text width="600"](/pictures/Waveshare_7_5.jpg)
 
 PCB
-![alt text width="600"](/amaWeatherStationEpaper_CH9102F_fix.png)
+![alt text width="600"](/pictures/amaWeatherStationEpaper_CH9102F_fix.png)
 
 Cabling
-![alt text width="600"](/amaWeatherStationPCB_Cabling.jpg)
+![alt text width="600"](/pictures/amaWeatherStationPCB_Cabling.jpg)
 
 3D Casing
-![alt text width="600"](/amaWeatherStationComplete.jpg)
+![alt text width="600"](/pictures/amaWeatherStationComplete.jpg)
