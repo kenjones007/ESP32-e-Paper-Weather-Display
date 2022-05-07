@@ -44,6 +44,18 @@ Compile and upload the code - Enjoy!
 
 ![alt text width="600"](/pictures/Waveshare_7_5_V2_marani.jpg)
 
+PCB
+![alt text width="600"](/pictures/amaWeatherStationEpaper_CH9102F_fix.png)
+
+Schematics
+![alt text width="600"](/pictures/amaWeatherStationSchematics1.1.png)
+
+Cabling
+![alt text width="600"](/pictures/amaWeatherStationPCB_Cabling.jpg)
+
+3D Casing
+![alt text width="600"](/pictures/amaWeatherStationComplete.jpg)
+
 7.5" Old 800x480 E-Paper Layout
 
 ![alt text width="600"](/pictures/Waveshare_7_5_new.jpg)
@@ -51,12 +63,3 @@ Compile and upload the code - Enjoy!
 7.5" Old 640x384 E-Paper Layout
 
 ![alt text width="600"](/pictures/Waveshare_7_5.jpg)
-
-PCB
-![alt text width="600"](/pictures/amaWeatherStationEpaper_CH9102F_fix.png)
-
-Cabling
-![alt text width="600"](/pictures/amaWeatherStationPCB_Cabling.jpg)
-
-3D Casing
-![alt text width="600"](/pictures/amaWeatherStationComplete.jpg)
