@@ -14,6 +14,10 @@ I just enhanced his version, like:
 - Moved some Status-Infos to better suitable places
 - Stronger lines in Weather Symbols and Wind graphics
 
+Additional Stuff:
+- 3D Case
+- Custom made PCB, now with CH9102F fix (cheap CP2104 alternativ UART Chip), you're able to use both chips now
+
 Download the software to your Arduino's library directory.
 
 1. From the examples, choose depending on your module either
@@ -27,13 +31,7 @@ Download the software to your Arduino's library directory.
 
 3. Edit the owm_credentials.h file in the IDE (TAB at top of IDE) and change your Language, Country, choose your units Metric or Imperial and be sure to find a valid weather station location on OpenWeatherMap, if your display has all blank values your location does not exist!
 
-4. If your are using the older style Waveshare HAT then you need to use:
-  
-  **display.init(); //for older Waveshare HAT's 
-  
-  In the InitialiseDisplay() function, comment out the variant as required 
-
-5. Save your files.
+4. Save your files.
 
 NOTE: See schematic for the wiring diagram, all displays are wired the same, so wire a 7.5" the same as a 4.2", 2.9" or 1.54" display! Both 2.13" TTGO T5 and 2.7" T5S boards come pre-wired.
 
@@ -45,24 +43,19 @@ Compile and upload the code - Enjoy!
 
 ![alt text width="600"](/Waveshare_7_5_V2_marani.jpg)
 
-7.5" 800x480 E-Paper Layout
+7.5" Old 800x480 E-Paper Layout
 
 ![alt text width="600"](/Waveshare_7_5_new.jpg)
 
-7.5" 640x384 E-Paper Layout
+7.5" Old 640x384 E-Paper Layout
 
 ![alt text width="600"](/Waveshare_7_5.jpg)
 
+PCB
+![alt text width="600"](/amaWeatherStationEpaper_CH9102F_fix.png)
 
-**** NOTE change needed for latest Waveshare HAT versions ****
+Cabling
+![alt text width="600"](/amaWeatherStationPCB_Cabling.jpg)
 
-Ensure you have the latest GxEPD2 library
-
-See here: https://github.com/ZinggJM/GxEPD2/releases/
-
-Modify this line in the code:
-
-display.init(115200, true, 2); // init(uint32_t serial_diag_bitrate, bool initial, uint16_t reset_duration, bool pulldown_rst_mode)
-
-Wiring Schematic for ALL Waveshare E-Paper Displays
-![alt_text, width="300"](/Schematic.JPG)
+3D Casing
+![alt text width="600"](/amaWeatherStationComplete.jpg)
