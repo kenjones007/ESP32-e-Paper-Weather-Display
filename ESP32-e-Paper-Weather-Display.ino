@@ -49,6 +49,14 @@
 #include "MoonRise.h"
 #include "MoonPhase.h"
 
+// Workaround to disabe LibraryDeepSearch in VisualMicro
+#include "Adafruit_GFX.h"
+#include "Adafruit_I2CDevice.h"
+#include "wire.h"
+#include "HTTPClient.h"
+#include "WiFiClientSecure.h"
+// Workaround to disabe LibraryDeepSearch in VisualMicro
+
 // Localisation (English)
 //#include "lang_cz.h"                  // Localisation (Czech)
 //#include "lang_fr.h"                  // Localisation (French)
@@ -168,8 +176,12 @@ void loop() { // this will never run!
 //#########################################################################################
 void BeginSleep() {
     display.powerOff();
-    long SleepTimer = (SleepDuration * 60 - ((CurrentMin % SleepDuration) * 60 + CurrentSec)); //Some ESP32 are too fast to maintain accurate time
-    esp_sleep_enable_timer_wakeup((SleepTimer + 20) * 1000000LL); // Added extra 20-secs of sleep to allow for slow ESP32 RTC timers
+    long SleepTimer = SleepDuration * 60; // theoretical sleep duration
+    long offset = (CurrentMin % SleepDuration) * 60 + CurrentSec; // number of seconds elapsed after last theoretical wake-up time point
+    if (offset > SleepDuration / 2 * 60) { // waking up too early will cause <offset> too large
+        offset -= SleepDuration * 60; // then we should make it negative, so as to extend this coming sleep duration
+    }
+    esp_sleep_enable_timer_wakeup((SleepTimer - offset) * 1000000LL); // do compensation to cover ESP32 RTC timer source inaccuracies
 #ifdef BUILTIN_LED
     pinMode(BUILTIN_LED, INPUT); // If it's On, turn it off and some boards use GPIO-5 for SPI-SS, which remains low after screen use
     digitalWrite(BUILTIN_LED, HIGH);
@@ -664,11 +676,13 @@ boolean UpdateLocalTime() {
 //#########################################################################################
 void DrawBattery(int x, int y) {
     uint8_t percentage = 100;
-    float voltage = analogRead(35) / 4096.0 * 6.96;
+    const float batt_min = 2.5f; // Liitokala with PCB has a CutOff at 2.5V, so that's the absolue minimum
+    const float batt_max = 3.9f; // Liitokala with PCB has a Voltage after the first few hours of around 3.8V - 3.9V
+    float voltage = analogRead(35) * 6.6 / 4095; // 4095 = 3.3V, but we added a Voltage Divider -> ADC * 2 * 3.3 / 4095 = ADC * 6.6 / 4095
 
-    if ((voltage > 3.0f) && (voltage < 4.9f)) { // Show voltage only display if there is a valid reading
+    if ((voltage > 2.0f) && (voltage < 4.9f)) { // Show voltage only display if there is a valid reading
         Serial.println("Voltage = " + String(voltage));
-        percentage = constrain((voltage - 3.5f) * 100.0f / (4.2f - 3.5f), 0, 100);
+        percentage = constrain((voltage - batt_min) * 100.0f / (batt_max - batt_min), 0, 100); // Liitokala CutOff = 2.5V
         drawString(x - 5, y, String(percentage) + "%", RIGHT);
         drawString(x + 25, y, String(voltage, 2) + "v", LEFT);
     }
@@ -970,6 +984,7 @@ void Nodata(int x, int y, bool IconSize, String IconName) {
     Marani: Added draw_graph: TRUE = Draw complete graph with values, FALSE = Just draw values (to add multiple values in one graph) thin
     Marani: Fixed error in MinMax Calculations
     Marani: Fixed error in DrawGraph values (Array 0-based index error)
+    Marani: Added vertical lines to seperate days (easier reading)
 */
 void calcMinMaxFromArray(uint8_t readings, float DataArray[], float& Y1Min, float& Y1Max) {
     float maxYscale = -10000;
@@ -1019,10 +1034,15 @@ void DrawGraph(int x_pos, int y_pos, int gwidth, int gheight, float Y1Min, float
     if (draw_graph) {
         float daywidth = gwidth / 3;
         for (int i = 0; i <= 3; i++) {
-            drawStringBoundingBox(20 + x_pos + daywidth * i - ((float)CurrentHour / 24.0f * daywidth), y_pos + gheight + 3, weekday_D[(CurrentDay + i) % 7], LEFT, x_pos, x_pos + gwidth + 3);
-
-
+            int xofs = x_pos + daywidth * i - ((float)CurrentHour / 24.0f * daywidth);
+            drawStringBoundingBox((daywidth / 2) - (u8g2Fonts.getUTF8Width(weekday_D[(CurrentDay + i) % 7]) / 2) + xofs, y_pos + gheight + 3, weekday_D[(CurrentDay + i) % 7], LEFT, x_pos, x_pos + gwidth + 3);
+            if (xofs > x_pos) {
+                for (int j = 0; j < number_of_dashes; j++) { // Draw dashed graph grid lines
+                    display.drawFastVLine(xofs, (y_pos + 3 + j * gheight / number_of_dashes), gheight / (2 * number_of_dashes), GxEPD_BLACK);
+                }
+            }
         }
+        // horizontal spacers and legend
         for (int spacing = 0; spacing <= y_minor_axis; spacing++) {
             for (int j = 0; j < number_of_dashes; j++) { // Draw dashed graph grid lines
                 if (spacing < y_minor_axis) display.drawFastHLine((x_pos + 3 + j * gwidth / number_of_dashes), y_pos + (gheight * spacing / y_minor_axis), gwidth / (2 * number_of_dashes), GxEPD_BLACK);
@@ -1038,7 +1058,6 @@ void DrawGraph(int x_pos, int y_pos, int gwidth, int gheight, float Y1Min, float
                     drawString(x_pos - 2, y_pos + gheight * spacing / y_minor_axis - 5, String((Y1Max - (float)(Y1Max - Y1Min) / y_minor_axis * spacing + 0.01), 0), RIGHT);
             }
         }
-        // drawString(x_pos + gwidth / 2, y_pos + gheight + 14, TXT_DAYS, CENTER);
     }
 }
 

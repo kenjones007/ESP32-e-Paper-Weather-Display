@@ -13,6 +13,8 @@ I just enhanced his version, like:
 - Changed Battery-Display when no battery used
 - Moved some Status-Infos to better suitable places
 - Stronger lines in Weather Symbols and Wind graphics
+- Fixed the positioning of weekday labels to be moved pixelperfect
+- Added vertical lines in all historys to get a better differntiation between days
 
 Additional Stuff:
 - 3D Case
