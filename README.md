@@ -42,6 +42,8 @@ Compile and upload the code - Enjoy!
 
 7.5" V2 Marani 800x480 E-Paper Layout
 
+![alt text width="600"](/pictures/Waveshare_7_5_Opti_1.jpg)
+
 ![alt text width="600"](/pictures/Waveshare_7_5_V2_marani.jpg)
 
 PCB
